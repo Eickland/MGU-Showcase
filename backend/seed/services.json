@@ -1,0 +1,378 @@
+{
+  "items": [
+    {
+      "slug": "physics-timetable",
+      "name": "Расписание физфака",
+      "description": "Расписание занятий на физическом факультете МГУ",
+      "icon": "📅",
+      "target_type": "external_url",
+      "target": "https://physics.msu.ru/rus/study/timetable/",
+      "status": "active",
+      "visibility": "public",
+      "allowed_roles": [],
+      "owner": {
+        "name": "Команда витрины МГУ",
+        "contact": ""
+      },
+      "sort_order": 0,
+      "pinned": false
+    },
+    {
+      "slug": "anti-moda",
+      "name": "Антимода",
+      "description": "Сайт содержит методические пособия для студентов физфака, структурированные по курсам и семестрам",
+      "icon": "📖",
+      "target_type": "external_url",
+      "target": "http://anti-moda.ru/",
+      "status": "active",
+      "visibility": "public",
+      "allowed_roles": [],
+      "owner": {
+        "name": "Команда витрины МГУ",
+        "contact": ""
+      },
+      "sort_order": 10,
+      "pinned": false
+    },
+    {
+      "slug": "teach-in",
+      "name": "Teach-in",
+      "description": "Открытые видеолекции МГУ: курсы и лекции по физике, астрономии, биологии и другим наукам",
+      "icon": "🎬",
+      "target_type": "external_url",
+      "target": "https://teach-in.ru/",
+      "status": "active",
+      "visibility": "public",
+      "allowed_roles": [],
+      "owner": {
+        "name": "Команда витрины МГУ",
+        "contact": ""
+      },
+      "sort_order": 20,
+      "pinned": false
+    },
+    {
+      "slug": "mfk",
+      "name": "МФК",
+      "description": "Регистрация на межфакультетские курсы в МГУ",
+      "icon": "✏️",
+      "target_type": "external_url",
+      "target": "https://mfc.msu.ru/",
+      "status": "active",
+      "visibility": "public",
+      "allowed_roles": [],
+      "owner": {
+        "name": "Команда витрины МГУ",
+        "contact": ""
+      },
+      "sort_order": 30,
+      "pinned": false
+    },
+    {
+      "slug": "dubinushka",
+      "name": "Дубинушка",
+      "description": "Сайт о жизни и учёбе на физическом факультете МГУ: события, преподаватели, материалы",
+      "icon": "🎓",
+      "target_type": "external_url",
+      "target": "https://dubinushka.ru/",
+      "status": "active",
+      "visibility": "public",
+      "allowed_roles": [],
+      "owner": {
+        "name": "Команда витрины МГУ",
+        "contact": ""
+      },
+      "sort_order": 40,
+      "pinned": false
+    },
+    {
+      "slug": "scholarship-calculator",
+      "name": "Калькулятор стипендии",
+      "description": "Калькулятор для расчёта выплат со стипендий",
+      "icon": "🧮",
+      "target_type": "external_url",
+      "target": "https://app.profcomff.com/apps/39",
+      "status": "active",
+      "visibility": "public",
+      "allowed_roles": [],
+      "owner": {
+        "name": "Команда витрины МГУ",
+        "contact": ""
+      },
+      "sort_order": 50,
+      "pinned": false
+    },
+    {
+      "slug": "physics-floor-map",
+      "name": "Схема этажей физфака",
+      "description": "Карта со схемами всех этажей на физфаке",
+      "icon": "🗺️",
+      "target_type": "external_url",
+      "target": "https://app.profcomff.com/apps/2",
+      "status": "active",
+      "visibility": "public",
+      "allowed_roles": [],
+      "owner": {
+        "name": "Команда витрины МГУ",
+        "contact": ""
+      },
+      "sort_order": 60,
+      "pinned": false
+    },
+    {
+      "slug": "istina",
+      "name": "Истина",
+      "description": "Учёт и анализ научной деятельности сотрудников МГУ: публикации, доклады, проекты",
+      "icon": "📊",
+      "target_type": "external_url",
+      "target": "https://istina.msu.ru/",
+      "status": "active",
+      "visibility": "public",
+      "allowed_roles": [],
+      "owner": {
+        "name": "Команда витрины МГУ",
+        "contact": ""
+      },
+      "sort_order": 70,
+      "pinned": false
+    },
+    {
+      "slug": "car-pass",
+      "name": "Пропуск на машину",
+      "description": "Форма для получения QR-кода для проезда на территорию МГУ",
+      "icon": "🚗",
+      "target_type": "external_url",
+      "target": "https://app.profcomff.com/apps/7",
+      "status": "active",
+      "visibility": "public",
+      "allowed_roles": [],
+      "owner": {
+        "name": "Команда витрины МГУ",
+        "contact": ""
+      },
+      "sort_order": 80,
+      "pinned": false
+    },
+    {
+      "slug": "umos",
+      "name": "Umos",
+      "description": "Оплата интернета в общежитиях МГУ",
+      "icon": "🌐",
+      "target_type": "external_url",
+      "target": "https://bill.umos.msu.ru/",
+      "status": "active",
+      "visibility": "public",
+      "allowed_roles": [],
+      "owner": {
+        "name": "Команда витрины МГУ",
+        "contact": ""
+      },
+      "sort_order": 90,
+      "pinned": false
+    },
+    {
+      "slug": "cafe-fakultet",
+      "name": "Кафе «Факультет»",
+      "description": "Онлайн заказ еды в главном здании",
+      "icon": "🍽️",
+      "target_type": "external_url",
+      "target": "https://vk.com/cafe_fak",
+      "status": "active",
+      "visibility": "public",
+      "allowed_roles": [],
+      "owner": {
+        "name": "Команда витрины МГУ",
+        "contact": ""
+      },
+      "sort_order": 100,
+      "pinned": false
+    },
+    {
+      "slug": "vvh",
+      "name": "ВВХ",
+      "description": "Студенческая группа физфака МГУ с материалами по учёбе",
+      "icon": "📚",
+      "target_type": "external_url",
+      "target": "https://vk.com/vvh_msu",
+      "status": "active",
+      "visibility": "public",
+      "allowed_roles": [],
+      "owner": {
+        "name": "Команда витрины МГУ",
+        "contact": ""
+      },
+      "sort_order": 110,
+      "pinned": false
+    },
+    {
+      "slug": "gp",
+      "name": "ГП",
+      "description": "Студенческая группа с материалами по пракам",
+      "icon": "🔬",
+      "target_type": "external_url",
+      "target": "https://vk.com/gp_msu",
+      "status": "active",
+      "visibility": "public",
+      "allowed_roles": [],
+      "owner": {
+        "name": "Команда витрины МГУ",
+        "contact": ""
+      },
+      "sort_order": 120,
+      "pinned": false
+    },
+    {
+      "slug": "print-dsl",
+      "name": "Бесплатный принтер ДСЛ",
+      "description": "Бесплатная печать в ДСЛ для студентов физфака",
+      "icon": "🖨️",
+      "target_type": "external_url",
+      "target": "https://vk.com/print_dsl",
+      "status": "active",
+      "visibility": "public",
+      "allowed_roles": [],
+      "owner": {
+        "name": "Команда витрины МГУ",
+        "contact": ""
+      },
+      "sort_order": 130,
+      "pinned": false
+    },
+    {
+      "slug": "print-ds",
+      "name": "Бесплатный принтер ДС",
+      "description": "Бесплатная печать в ДС для студентов физфака",
+      "icon": "📋",
+      "target_type": "external_url",
+      "target": "https://vk.com/freeprint_ds",
+      "status": "active",
+      "visibility": "public",
+      "allowed_roles": [],
+      "owner": {
+        "name": "Команда витрины МГУ",
+        "contact": ""
+      },
+      "sort_order": 140,
+      "pinned": false
+    },
+    {
+      "slug": "laundry-dsl",
+      "name": "Запись в постирочную ДСЛ",
+      "description": "Онлайн запись в постирочную общежития ДСЛ для физфака",
+      "icon": "🧺",
+      "target_type": "external_url",
+      "target": "https://dikidi.net/947032?p=0.pi",
+      "status": "active",
+      "visibility": "public",
+      "allowed_roles": [],
+      "owner": {
+        "name": "Команда витрины МГУ",
+        "contact": ""
+      },
+      "sort_order": 150,
+      "pinned": false
+    },
+    {
+      "slug": "laundry-ds-v",
+      "name": "Запись в постирочную ДС корпус В",
+      "description": "Онлайн запись в постирочную общежития ДС корпуса В",
+      "icon": "🫧",
+      "target_type": "external_url",
+      "target": "https://vk.com/laundry_ds",
+      "status": "active",
+      "visibility": "public",
+      "allowed_roles": [],
+      "owner": {
+        "name": "Команда витрины МГУ",
+        "contact": ""
+      },
+      "sort_order": 160,
+      "pinned": false
+    },
+    {
+      "slug": "infra-dsl",
+      "name": "Инфраструктура ДСЛ",
+      "description": "Информация об инфраструктуре ДСЛ: студком, прачечная, спортзал, коворкинг, правила для гостей и многое другое",
+      "icon": "🏠",
+      "target_type": "external_url",
+      "target": "https://vk.com/@studcomdsl-faq-3-infrastruktura-dsl",
+      "status": "active",
+      "visibility": "public",
+      "allowed_roles": [],
+      "owner": {
+        "name": "Команда витрины МГУ",
+        "contact": ""
+      },
+      "sort_order": 170,
+      "pinned": false
+    },
+    {
+      "slug": "infra-ds",
+      "name": "Инфраструктура ДС",
+      "description": "FAQ об инфраструктуре ДС: бюро пропусков, столовые, банкоматы, прачечные, коворкинги и другие службы",
+      "icon": "🏢",
+      "target_type": "external_url",
+      "target": "https://vk.com/@studcomds-faq-3-infrastruktura-ds",
+      "status": "active",
+      "visibility": "public",
+      "allowed_roles": [],
+      "owner": {
+        "name": "Команда витрины МГУ",
+        "contact": ""
+      },
+      "sort_order": 180,
+      "pinned": false
+    },
+    {
+      "slug": "infra-dsv",
+      "name": "Инфраструктура ДСВ",
+      "description": "Информация об общежитии ДСВ МГУ: условия проживания, клубы, спорт, пропускной режим",
+      "icon": "🌐",
+      "target_type": "external_url",
+      "target": "https://vk.com/@studcomdsv-obschezhitie-dlya-inogorodnih-studentov-dsv-mgu",
+      "status": "active",
+      "visibility": "public",
+      "allowed_roles": [],
+      "owner": {
+        "name": "Команда витрины МГУ",
+        "contact": ""
+      },
+      "sort_order": 190,
+      "pinned": false
+    },
+    {
+      "slug": "infra-fds",
+      "name": "Инфраструктура ФДС",
+      "description": "FAQ об инфраструктуре ФДС: студком, постирочная, спортивная комната, места для учёбы и отдыха",
+      "icon": "🏫",
+      "target_type": "external_url",
+      "target": "https://vk.com/@studcomfds-faq-3-vnutri-obschezhitiya-infrastruktura",
+      "status": "active",
+      "visibility": "public",
+      "allowed_roles": [],
+      "owner": {
+        "name": "Команда витрины МГУ",
+        "contact": ""
+      },
+      "sort_order": 200,
+      "pinned": false
+    },
+    {
+      "slug": "infra-das",
+      "name": "Инфраструктура ДАС",
+      "description": "Внутренняя жизнь ДАС: администрация, столовая, постирочные, спортзал, коворкинг, правила для гостей",
+      "icon": "🏛️",
+      "target_type": "external_url",
+      "target": "https://vk.com/@studcomdas-was-ist-das-3-vnutrennyaya-zhizn-obschezhitiya",
+      "status": "active",
+      "visibility": "public",
+      "allowed_roles": [],
+      "owner": {
+        "name": "Команда витрины МГУ",
+        "contact": ""
+      },
+      "sort_order": 210,
+      "pinned": false
+    }
+  ]
+}

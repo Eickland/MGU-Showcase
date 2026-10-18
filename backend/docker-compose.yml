@@ -1,0 +1,30 @@
+# Локальная разработка: Postgres + бэкенд.
+#   docker compose up --build
+#   docker compose run --rm api seed     # загрузить начальные записи
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: mgu
+      POSTGRES_PASSWORD: mgu
+      POSTGRES_DB: mgu
+    ports: ["5432:5432"]
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mgu"]
+      interval: 2s
+      retries: 20
+
+  api:
+    build: .
+    environment:
+      DATABASE_URL: postgres://mgu:mgu@db:5432/mgu?sslmode=disable
+      ADMIN_TOKEN: dev-admin-token-change-me
+      CORS_ALLOWED_ORIGINS: http://localhost:20127,http://localhost:5173
+      AUTH_DEV_HEADERS: "true"
+    ports: ["8081:8081"]
+    depends_on:
+      db: { condition: service_healthy }
+
+volumes:
+  pgdata:

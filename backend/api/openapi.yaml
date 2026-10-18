@@ -1,0 +1,295 @@
+openapi: 3.1.0
+info:
+  title: MGU Showcase API
+  version: 1.0.0
+  description: |
+    Бэкенд витрины МГУ. Модуль Registry хранит элементы витрины (карточки сервисов).
+
+    Аутентификация (временная, до Keycloak):
+    - `Authorization: Bearer <ADMIN_TOKEN>` — управление реестром (POST/PATCH/DELETE, scope=all);
+    - `X-Dev-User` / `X-Dev-Roles` — только в dev-режиме (AUTH_DEV_HEADERS=true), для проверки видимости.
+servers:
+  - url: /api
+tags:
+  - name: services
+  - name: health
+paths:
+  /healthz:
+    get:
+      tags: [health]
+      operationId: healthCheck
+      summary: Liveness
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/HealthStatus" }
+  /readyz:
+    get:
+      tags: [health]
+      operationId: readinessCheck
+      summary: Readiness (проверяет доступность БД)
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/HealthStatus" }
+        "503":
+          description: Хранилище недоступно
+  /v1/services:
+    get:
+      tags: [services]
+      operationId: listServices
+      summary: Элементы витрины
+      description: |
+        По умолчанию (`scope=catalog`) — элементы, которые нужно показать текущему пользователю:
+        только статусы `active` и `maintenance`, с учётом `visibility`, без служебных полей.
+        Сортировка: закреплённые первыми, затем по `sort_order`, затем по имени.
+
+        `scope=all` (только админ) — весь реестр с владельцами и правилами доступа.
+      parameters:
+        - name: scope
+          in: query
+          schema: { type: string, enum: [catalog, all], default: catalog }
+        - name: status
+          in: query
+          description: Только для scope=all. Статусы через запятую.
+          schema: { type: string, example: "draft,active" }
+      responses:
+        "200":
+          description: Список
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/CatalogList"
+                  - $ref: "#/components/schemas/ServiceList"
+        "400": { $ref: "#/components/responses/Error" }
+        "401": { $ref: "#/components/responses/Error" }
+        "403": { $ref: "#/components/responses/Error" }
+    post:
+      tags: [services]
+      operationId: createService
+      summary: Создать элемент (админ)
+      security: [{ adminToken: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/ServiceCreate" }
+      responses:
+        "201":
+          description: Создан
+          headers:
+            Location: { schema: { type: string } }
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Service" }
+        "400": { $ref: "#/components/responses/Error" }
+        "401": { $ref: "#/components/responses/Error" }
+        "403": { $ref: "#/components/responses/Error" }
+        "409": { $ref: "#/components/responses/Error" }
+        "422": { $ref: "#/components/responses/Error" }
+  /v1/services/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema: { type: string, format: uuid }
+    get:
+      tags: [services]
+      operationId: getService
+      summary: Элемент по id
+      description: |
+        `scope=catalog` — 404, если элемент не виден текущему пользователю.
+        `scope=all` (админ) — полное представление без учёта видимости.
+      parameters:
+        - name: scope
+          in: query
+          schema: { type: string, enum: [catalog, all], default: catalog }
+      responses:
+        "200":
+          description: Элемент
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/CatalogItem"
+                  - $ref: "#/components/schemas/Service"
+        "404": { $ref: "#/components/responses/Error" }
+    patch:
+      tags: [services]
+      operationId: updateService
+      summary: Частично обновить элемент (админ)
+      description: |
+        Передаются только изменяемые поля. При смене `visibility` на не-`role_based`
+        без явного `allowed_roles` роли очищаются автоматически.
+      security: [{ adminToken: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/ServiceUpdate" }
+      responses:
+        "200":
+          description: Обновлён
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Service" }
+        "400": { $ref: "#/components/responses/Error" }
+        "401": { $ref: "#/components/responses/Error" }
+        "403": { $ref: "#/components/responses/Error" }
+        "404": { $ref: "#/components/responses/Error" }
+        "409": { $ref: "#/components/responses/Error" }
+        "422": { $ref: "#/components/responses/Error" }
+    delete:
+      tags: [services]
+      operationId: deleteService
+      summary: Удалить элемент (админ)
+      security: [{ adminToken: [] }]
+      responses:
+        "204": { description: Удалён }
+        "401": { $ref: "#/components/responses/Error" }
+        "403": { $ref: "#/components/responses/Error" }
+        "404": { $ref: "#/components/responses/Error" }
+components:
+  securitySchemes:
+    adminToken:
+      type: http
+      scheme: bearer
+  responses:
+    Error:
+      description: Ошибка
+      content:
+        application/json:
+          schema: { $ref: "#/components/schemas/ErrorResponse" }
+  schemas:
+    HealthStatus:
+      type: object
+      required: [status]
+      properties:
+        status: { type: string }
+    TargetType:
+      type: string
+      description: |
+        Как фронтенд открывает карточку. Сейчас поддержан только `external_url`;
+        остальные предусмотрены моделью и БД, но API их пока отклоняет (422).
+      enum: [external_url, internal_route, application, embedded]
+    Status:
+      type: string
+      enum: [draft, active, maintenance, disabled]
+    Visibility:
+      type: string
+      enum: [public, authenticated, role_based]
+    Owner:
+      type: object
+      required: [name]
+      properties:
+        name: { type: string, maxLength: 200, description: Команда или человек }
+        contact: { type: string, maxLength: 200 }
+    CatalogItem:
+      type: object
+      description: Элемент витрины для пользователя (без владельца и правил доступа).
+      required: [id, slug, name, description, icon, target_type, target, status, pinned]
+      properties:
+        id: { type: string, format: uuid }
+        slug: { type: string }
+        name: { type: string }
+        description: { type: string }
+        icon: { type: string, description: emoji или URL }
+        target_type: { $ref: "#/components/schemas/TargetType" }
+        target: { type: string }
+        status:
+          type: string
+          enum: [active, maintenance]
+        pinned: { type: boolean }
+    Service:
+      description: Полное представление элемента реестра.
+      allOf:
+        - $ref: "#/components/schemas/CatalogItem"
+        - type: object
+          required: [visibility, allowed_roles, owner, sort_order, created_at, updated_at]
+          properties:
+            status: { $ref: "#/components/schemas/Status" }
+            visibility: { $ref: "#/components/schemas/Visibility" }
+            allowed_roles: { type: array, items: { type: string } }
+            owner: { $ref: "#/components/schemas/Owner" }
+            sort_order: { type: integer }
+            created_at: { type: string, format: date-time }
+            updated_at: { type: string, format: date-time }
+    CatalogList:
+      type: object
+      required: [items]
+      properties:
+        items: { type: array, items: { $ref: "#/components/schemas/CatalogItem" } }
+    ServiceList:
+      type: object
+      required: [items]
+      properties:
+        items: { type: array, items: { $ref: "#/components/schemas/Service" } }
+    ServiceCreate:
+      type: object
+      additionalProperties: false
+      required: [slug, name, target_type, target, owner]
+      properties:
+        slug: { type: string, pattern: "^[a-z0-9]+(?:-[a-z0-9]+)*$", maxLength: 64 }
+        name: { type: string, maxLength: 120 }
+        description: { type: string, maxLength: 1000 }
+        icon: { type: string, maxLength: 512 }
+        target_type: { $ref: "#/components/schemas/TargetType" }
+        target: { type: string, maxLength: 2048 }
+        status:
+          allOf: [{ $ref: "#/components/schemas/Status" }]
+          default: draft
+        visibility:
+          allOf: [{ $ref: "#/components/schemas/Visibility" }]
+          default: public
+        allowed_roles:
+          type: array
+          description: Обязательно и непусто при visibility=role_based, иначе должно быть пустым.
+          items: { type: string, pattern: "^[a-z0-9][a-z0-9_.:-]{0,63}$" }
+        owner: { $ref: "#/components/schemas/Owner" }
+        sort_order: { type: integer, default: 0 }
+        pinned: { type: boolean, default: false }
+    ServiceUpdate:
+      type: object
+      additionalProperties: false
+      properties:
+        slug: { type: string }
+        name: { type: string }
+        description: { type: string }
+        icon: { type: string }
+        target_type: { $ref: "#/components/schemas/TargetType" }
+        target: { type: string }
+        status: { $ref: "#/components/schemas/Status" }
+        visibility: { $ref: "#/components/schemas/Visibility" }
+        allowed_roles: { type: array, items: { type: string } }
+        owner:
+          type: object
+          properties:
+            name: { type: string }
+            contact: { type: string }
+        sort_order: { type: integer }
+        pinned: { type: boolean }
+    ErrorResponse:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: object
+          required: [code, message]
+          properties:
+            code:
+              type: string
+              enum: [bad_request, unauthorized, forbidden, not_found, conflict, validation_failed, internal]
+            message: { type: string }
+            fields:
+              type: array
+              items:
+                type: object
+                properties:
+                  field: { type: string }
+                  message: { type: string }
+            request_id: { type: string }
